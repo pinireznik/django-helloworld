@@ -10,7 +10,7 @@ run apt-get install -y nginx supervisor
 run easy_install pip
 
 # install uwsgi now because it takes a little while
-run pip install uwsgi
+run pip install  --no-use-wheel uwsgi
 
 # install nginx
 run apt-get install -y python-software-properties
@@ -28,11 +28,14 @@ run ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/
 run ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
 # run pip install
-run pip install -r /home/docker/code/app/requirements.txt
+# run pip install --no-use-wheel -r /home/docker/code/app/requirements.txt
+run pip install --no-use-wheel django
 
 # install django, normally you would remove this step because your project would already
 # be installed in the code/app/ directory
-run django-admin.py startproject website /home/docker/code/app/ 
+# run django-admin.py startproject website /home/docker/code/app/ 
 
 expose 8000
 # cmd ["supervisord", "-n"]
+# cmd ["python manage.py", "runserver 0.0.0.0:8000"]a
+cmd ["./startup.sh"]
