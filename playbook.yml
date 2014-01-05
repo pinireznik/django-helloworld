@@ -1,0 +1,8 @@
+
+- hosts: piniubuntults
+  tasks:
+  - name: Django container
+    docker: image=preznik/django-helloworld volumes=/home/preznik/dev/django-helloworld:/home/docker/code/app/
+  - name: print IPs
+    debug: msg="Returned Name={{item.Name}}, Hostname={{item.Config.Hostname}}, IP={{item.NetworkSettings.IPAddress}}"
+    with_items: docker_containers
